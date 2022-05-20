@@ -1,0 +1,6 @@
+package io.roley.demo
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

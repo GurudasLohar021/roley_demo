@@ -1,0 +1,9 @@
+on:
+  push:
+    tags:
+      - v*
+name: Continuous delivery release apk
+jobs:
+  build:
+    name: Build APK
+    runs-on: macos-latest
