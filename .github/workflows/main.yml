@@ -4,8 +4,6 @@ on:
       - main
       - master
   push:
-    tags:
-      - '*'
     branches:
       - main
       - master
@@ -29,6 +27,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*"
-          tags: v1.0.${{ github.run_number }}
+          tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
 
