@@ -4,6 +4,8 @@ on:
       - main
       - master
   push:
+    tags:
+      - '*'
     branches:
       - main
       - master
