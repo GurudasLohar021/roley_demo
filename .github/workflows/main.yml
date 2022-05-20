@@ -1,11 +1,17 @@
 on:
+  pull_request:
+    branches:
+      - main
+      - master
   push:
-    tags:
-      - v*
-name: Continuous delivery release apk
+    branches:
+      - main
+      - master
+      - develop
+name: "Build & Release"
 jobs:
   build:
-    name: Build APK
+    name: Build & Release APK
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
@@ -14,12 +20,14 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.10.x'
+          flutter-version: '2.10.3'
       - run: flutter pub get
-      - run: flutter build apk -t lib/main_prod.dart --split-per-abi
-      - run: Release apk
+      - run: flutter test
+      - run: flutter build apk --debug --split-per-abi
+      - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: build/app/outputs/apk/release/*.apk
-          token: ${{secrets.TOKEN}}
+          artifacts: "build/app/outputs/apk/debug/*"
+          tags: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
 

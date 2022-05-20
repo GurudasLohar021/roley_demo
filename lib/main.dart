@@ -6,7 +6,6 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-
 import 'consumable_store.dart';
 
 void main() {
@@ -203,8 +202,9 @@ class _MyAppState extends State<MyApp> {
         ListTile(
           title: Text('Not connected',
               style: TextStyle(color: ThemeData.light().errorColor)),
-          subtitle: const Text(
-              'Unable to connect to the payments processor. Has this app been configured correctly? See the example README for instructions.'),
+          subtitle: const Text('Unable to connect to the payments processor. '
+              'Has this app been configured correctly? '
+              'See the example README for instructions.'),
         ),
       ]);
     }
@@ -378,7 +378,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
-    // IMPORTANT!! Always verify purchase details before delivering the product.
     if (purchaseDetails.productID == _kConsumableId) {
       await ConsumableStore.save(purchaseDetails.purchaseID!);
       final List<String> consumables = await ConsumableStore.load();
@@ -401,14 +400,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
-    // IMPORTANT!! Always verify a purchase before delivering the product.
-    // For the purpose of an example, we directly return true.
     return Future<bool>.value(true);
   }
 
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    // handle invalid purchase here if  _verifyPurchase` failed.
-  }
+  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {}
 
   Future<void> _listenToPurchaseUpdated(
       List<PurchaseDetails> purchaseDetailsList) async {
@@ -460,7 +455,8 @@ class _MyAppState extends State<MyApp> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             priceChangeConfirmationResult.debugMessage ??
-                'Price change failed with code ${priceChangeConfirmationResult.responseCode}',
+                'Price change failed with code '
+                    '${priceChangeConfirmationResult.responseCode}',
           ),
         ));
       }
@@ -475,13 +471,6 @@ class _MyAppState extends State<MyApp> {
 
   GooglePlayPurchaseDetails? _getOldSubscription(
       ProductDetails productDetails, Map<String, PurchaseDetails> purchases) {
-    // This is just to demonstrate a subscription upgrade or downgrade.
-    // This method assumes that you have only 2 subscriptions under a group, 'subscription_silver' & 'subscription_gold'.
-    // The 'subscription_silver' subscription can be upgraded to 'subscription_gold' and
-    // the 'subscription_gold' subscription can be downgraded to 'subscription_silver'.
-    // Please remember to replace the logic of finding the old subscription Id as per your app.
-    // The old subscription is only required on Android since Apple handles this internally
-    // by using the subscription group feature in iTunesConnect.
     GooglePlayPurchaseDetails? oldSubscription;
     if (productDetails.id == _kSilverSubscriptionId &&
         purchases[_kGoldSubscriptionId] != null) {
