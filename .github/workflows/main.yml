@@ -35,12 +35,12 @@ jobs:
           artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
-      commit:
-        - name: Upload app bundle artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: appbundle
-            path: build/app/outputs/bundle/release/app-release.aab
+      - name: Upload app bundle artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: appbundle
+          path: build/app/outputs/bundle/release/app-release.aab
+
 
 
 
