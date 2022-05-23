@@ -1,14 +1,10 @@
 on:
   push:
-    tags:
-      - "v*"
     branches:
       - main
-      - master
-      - develop
 name: "Build & Release"
 jobs:
-  build:
+  check-bats-version:
     name: Build & Release APK
     runs-on: macos-latest
     steps:
@@ -16,18 +12,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - name: Create key file
-        env:
-          KEY_JKS: ${{ secrets.KEY_JKS }}
-          KEY_PATH: "upload-keystore.jks"
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
-        run: echo $KEY_JKS | base64 -di > upload-keystore.jks
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '2.10.3'
       - run: flutter pub get
-      - run: flutter build apk — release — split-per-abi
+      - run: flutter build apk
       - run: flutter build appbundle
       - name: Push to Releases
         uses: ncipollo/release-action@v1
@@ -35,12 +24,6 @@ jobs:
           artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
-      - name: Upload app bundle artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: appbundle
-          path: build/app/outputs/bundle/release/app-release.aab
-
 
 
 
