@@ -52,9 +52,13 @@ jobs:
         run: |
           echo "Convert key base64 string to a file"
           echo "$KEYSTORE_FILE" >> key.jks.base64
+          echo "Convertion Completed $KEYSTORE_FILE"
+          echo "KEY_PROPERTIES_FILE" >> key.properties.base64
+          echo "Convertion Completed KEY_PROPERTIES_FILE"
           base64 --decode key.jks.base64 > key.jks
+          echo "Convert key.jks secret string to a file"
+          base64 --decode key.properties.base64 > key.properties
           echo "Convert key.properties secret string to a file"
-          echo "$KEY_PROPERTIES_FILE" >> key.properties
         working-directory: 'android/'
 
       - name: Set up Flutter
