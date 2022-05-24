@@ -9,6 +9,7 @@ name: "Build & Release"
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
   FLUTTER_VERSION: '3.0.0'
+  PATH_TO_APK: 'build/app/outputs/flutter-apk/app-release.apk'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'io.roley.demo'
 
@@ -20,11 +21,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -70,6 +66,15 @@ jobs:
 
       - name: Flutter doctor
         run: flutter doctor
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: ${{ env.PATH_TO_APK }}
 
       - name: Build AAB
         run: flutter build appbundle --release
