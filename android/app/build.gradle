@@ -58,7 +58,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile = file('key.jks')
+            storeFile = file('Users/macbook/Documents/Demos/roley_demo/android/key.jks')
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             // storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
