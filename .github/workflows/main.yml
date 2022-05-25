@@ -12,7 +12,6 @@ env:
   PATH_TO_APK: 'build/app/outputs/flutter-apk/app-release.apk'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'io.roley.demo'
-  PROPERTIES_PATH: "./android/key.properties"
 
 jobs:
   code-analysis-and-testing:
