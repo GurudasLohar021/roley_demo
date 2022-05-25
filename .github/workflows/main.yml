@@ -51,9 +51,9 @@ jobs:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
           KEY_PROPERTIES_FILE: ${{ secrets.KEY_PROPERTIES_FILE }}
         run: |
-          echo keyPassword=\${{ secrets.ALIAS_PASSWORD }} > ${{env.PROPERTIES_PATH}}
-          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=\${{ secrets.KEY_JKS }} >> ${{env.PROPERTIES_PATH}}
+          echo keyPassword= ${{ secrets.ALIAS_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo storePassword= ${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo keyAlias= ${{ secrets.KEY_JKS }} >> ${{env.PROPERTIES_PATH}}
 
           echo "Convert key base64 string to a file KEYSTORE_FILE"
           echo "$KEYSTORE_FILE" >> key.jks.base64
