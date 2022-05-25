@@ -68,12 +68,10 @@ jobs:
         with:
           java-version: 11
 
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-
 
       - name: Build APK
         run: flutter build apk --release
