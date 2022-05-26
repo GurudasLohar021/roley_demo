@@ -5,6 +5,18 @@ platform :android do
   lane : closed_beta_upload_to_play_store do
     begin
       gradle(task: "clean")
+
+      g = google_play_track_version_codes
+      gb = google_play_track_version_codes(track: ‘beta’)
+      ga = google_play_track_version_codes(track: ‘alpha’)
+
+      max_value = [g[0].to_i, gb[0].to_i, ga[0].to_i].max
+      puts “this is the version number”
+      puts max_value
+      version_updated = max_value + 1
+      puts “this is the incremented version number”
+      puts version_updated
+      increment_version_code(gradle_file_path: “./app/build.gradle”, version_code: version_updated.to_i)
       gradle(
         task: "bundle",
         build_type: 'Release'
